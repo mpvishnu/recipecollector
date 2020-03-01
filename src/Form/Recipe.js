@@ -15,6 +15,8 @@ class Recipe extends Component{
         this.setState({
           rating: newRating
         });
+
+        console.log(this.state.rating);
     }
     render(){
         return(
