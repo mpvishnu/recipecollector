@@ -2,8 +2,10 @@ const router = require('express').Router();
 let Recipe = require('../models/recipe.js');
 
 router.route('/').get((req,res) =>{
-    Recipe.find({},{Name:1})
-    .then(recipes => console.log(recipes))
+    let rid = req.query.recipeID;
+
+    Recipe.find({RecipeID:rid},{Name:1})
+    .then(recipes => res.json(recipes))
     .catch(err => res.status(400).json('Error: '+ err));
 });
 

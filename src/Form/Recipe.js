@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import './Recipe.css';
 import StarRatings from 'react-star-ratings';
+import API from '../utils/API'
 
 class Recipe extends Component{
+    state = {
+        rating: 0,
+        apiResponse: "",
+        recipeName :""
+    }
     constructor(props) {
         super(props)
-        this.state = {
-            rating: 0
-        //   starsSelected: 0
-        }
+        
         this.changeRating = this.changeRating.bind(this);
     }
 
@@ -18,12 +21,25 @@ class Recipe extends Component{
         });
         console.log(newRating);
     }
+    
+    async componentWillMount() {
+        let getResp = await API.get('/', {
+            params: {
+                recipeID : this.props.rid
+            }
+        });
+        
+        this.setState({apiResponse : getResp});
+        this.setState({recipeName : this.state.apiResponse.data[0].Name});
+        
+    }
 
     render(){
         return(
             <div className="r1">
                 {/* Get Ricpe Name from database and display in placeholder */}
-                <h4>Recipe Name: {this.props.rid}</h4>
+                <p>Recipe Name: </p> <h4>{this.state.recipeName}</h4>
+                <br/>
 
                 {/* Placeholder for Ratings widget */}
                 <p>Your Ratings:</p>

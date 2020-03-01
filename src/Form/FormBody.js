@@ -1,4 +1,4 @@
-import React, { Component,useState } from 'react';
+import React, { useState } from 'react';
 import './FormBody.css';
 import Recipe from './Recipe.js'
 import Button from 'react-bootstrap/Button';
@@ -10,7 +10,7 @@ function FormBody()  {
   const [recipeList, setrecipeList] = useState([]);
 
   const fetchRecipes = () => {
-    setrecipeList(recipeList.concat(<Recipe key={recipeList.length} />));
+    setrecipeList(recipeList.concat(<Recipe rid={recipeList.length+4} />));
   }
 
 

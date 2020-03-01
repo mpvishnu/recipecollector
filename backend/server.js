@@ -20,7 +20,7 @@ connection.once('open', () => {
 
 const recipeRouter = require('./routes/getrecipe.js');
 
-app.use('/getrecipes', recipeRouter);
+app.use('/getrecipe', recipeRouter);
 
 
 app.listen( port, () => {
