@@ -11,13 +11,14 @@ class Recipe extends Component{
         }
         this.changeRating = this.changeRating.bind(this);
     }
+
     changeRating( newRating, name ) {
         this.setState({
           rating: newRating
         });
-
-        console.log(this.state.rating);
+        console.log(newRating);
     }
+
     render(){
         return(
             <div className="r1">
