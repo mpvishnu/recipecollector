@@ -1,0 +1,19 @@
+.fb1 {
+  /* background-color: rgb(32, 45, 116);
+    width:600px;
+    margin: 20px auto;
+    box-shadow: 0 2px 2px rgb(5, 4, 0); */
+
+  align-content: center;
+}
+
+.p1 {
+  color: white;
+}
+.submit {
+  background-color: burlywood;
+}
+
+.cap {
+  margin-left: 41%;
+}

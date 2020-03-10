@@ -3,13 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.27",
+    "@fortawesome/free-regular-svg-icons": "^5.12.1",
+    "@fortawesome/free-solid-svg-icons": "^5.12.1",
+    "@fortawesome/react-fontawesome": "^0.1.9",
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
+    "eslint-plugin-prettier": "^3.1.2",
+    "prettier": "^1.19.1",
     "react": "^16.13.0",
     "react-bootstrap": "^1.0.0-beta.17",
     "react-dom": "^16.13.0",
-    "react-scripts": "1.1.5",
-    "react-star-ratings": "^2.3.0"
+    "react-rating": "^2.0.4",
+    "react-recaptcha": "^2.3.10",
+    "react-scripts": "1.1.5"
   },
   "scripts": {
     "start": "react-scripts start",
