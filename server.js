@@ -3,8 +3,14 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 let Recipe = require("./models/recipe.js");
 let Review = require("./models/review.js");
-const path = require(“path”);
-app.use(express.static(path.join(__dirname, “frontend/build”)))
+const path = require("path");
+// app.use(express.static(path.join(__dirname, "frontend/build")))
+
+app.use(express.static("frontend/build"));
+
+app.get("*", (req, res) => {
+res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
+});
 
 require("dotenv").config();
 
@@ -58,6 +64,8 @@ app.post("/savereview", (req, res) => {
     .catch(err => res.status(400).json("Error: 400"));
   //res.json("Stored The recipe review")
 });
+
+
 
 app.listen(port, () => {
   console.log(`Server is running ...! on port : ${port}`);
