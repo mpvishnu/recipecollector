@@ -3,6 +3,8 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 let Recipe = require("./models/recipe.js");
 let Review = require("./models/review.js");
+const path = require(“path”);
+app.use(express.static(path.join(__dirname, “frontend/build”)))
 
 require("dotenv").config();
 
