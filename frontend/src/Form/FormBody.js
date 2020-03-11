@@ -28,7 +28,8 @@ class FormBody extends Component {
       hide_comp: false,
       recipeMap: [],
       rating: 0,
-      submitStatus: false
+      submitStatus: false,
+      message: ""
     };
   }
 
@@ -82,14 +83,16 @@ class FormBody extends Component {
         // console.log(res.data)
         this.setState({
           submitStatus: true,
-          recipeList: ["Your response has been recorded. Thank You."]
+          message: "Your response has been recorded. Thank You.",
+          recipeList: []
         });
       })
       .catch(e => {
         // console.log(e);
         this.setState({
           submitStatus: true,
-          recipeList: ["You have already submitted a response. Thank you."]
+          message: "You have already submitted a response. Thank You!",
+          recipeList: []
         });
       });
   }
@@ -104,7 +107,7 @@ class FormBody extends Component {
 
   render() {
     return (
-      <div>
+      <div className="fb1" style={{ width: "50%", margin: "0 auto" }}>
         <p>
           <select
             ref="userInput"
@@ -123,23 +126,38 @@ class FormBody extends Component {
         </p>
         <div className="additionalRecipes"> {this.state.recipeList}</div>
 
-        <p>* Unconfirmed Ratings will not be submitted</p>
-        <div className="cap">
-          <Recaptcha
-            sitekey="6LcoAt8UAAAAAO5XRwKcKoGNPPDiyDpvKFMudO-F"
-            render="explicit"
-            onloadCallback={this.recaptchaLoaded}
-            verifyCallback={this.verifyCallback}
-          />
-        </div>
-        <Button
-          variant="outline-dark"
-          size="lg"
-          onClick={this.handleSubmit}
-          disabled={this.state.submitStatus}
-        >
-          Submit
-        </Button>
+        <p style={{ color: "white" }}>
+          * Unconfirmed Ratings will not be submitted
+        </p>
+        {!this.state.submitStatus ? (
+          <div>
+            <div
+              style={{
+                display: "flex",
+                width: "50%",
+                margin: "0 auto",
+                justifyContent: "center"
+              }}
+            >
+              <Recaptcha
+                sitekey="6LcoAt8UAAAAAO5XRwKcKoGNPPDiyDpvKFMudO-F"
+                render="explicit"
+                onloadCallback={this.recaptchaLoaded}
+                verifyCallback={this.verifyCallback}
+              />
+            </div>
+            <Button
+              variant="outline-light"
+              size="lg"
+              onClick={this.handleSubmit}
+              disabled={this.state.submitStatus}
+            >
+              Submit
+            </Button>
+          </div>
+        ) : (
+          <p className="message">{this.state.message}</p>
+        )}
       </div>
     );
   }

@@ -8,8 +8,12 @@ class App extends Component {
     return (
       <div className="App">
         <h1>RATE YOUR FAVORITE DISHES!</h1>
-        <h5>Click confirm once you are confident with your rating..</h5>
-        <h6>We know that choosing among your favorites can be difficult :)</h6>
+        <h5 style={{ color: "white" }}>
+          Click confirm once you are confident with your rating..
+        </h5>
+        <h6 style={{ color: "white" }}>
+          We know that choosing among your favorites can be difficult :)
+        </h6>
         <FormBody />
       </div>
     );

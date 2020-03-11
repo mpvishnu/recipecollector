@@ -64,7 +64,7 @@ class Recipe extends Component {
     return (
       <div>
         {this.state.showComp ? (
-          <div className="r1">
+          <div className="r1" style={{ color: "black" }}>
             <p>Recipe Name: </p> <h4>{this.props.rName}</h4>
             <br />
             <p>Your Ratings:</p>
