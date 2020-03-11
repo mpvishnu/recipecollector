@@ -49,7 +49,7 @@ class FormBody extends Component {
   }
 
   hide_component = rate => {
-    console.log(this.context.reviews);
+    // console.log(this.context.reviews);
   };
 
   onChangeRecipeName(e) {
@@ -57,7 +57,7 @@ class FormBody extends Component {
       recipeName: e.target.value,
       count: this.state.count + 1,
       recipeList:
-        e.target.value !== "Select a Recipe from the list"
+        e.target.value !== "Add a Recipe from this list to rate them"
           ? this.state.recipeList.concat(
               <Recipe
                 key={this.state.count}
@@ -69,9 +69,9 @@ class FormBody extends Component {
     });
   }
 
-  recaptchaLoaded() {
-    console.log("capcha successfully loaded");
-  }
+  recaptchaLoaded = () => {
+    // console.log("capcha successfully loaded");
+  };
 
   handleSubmit() {
     axios
@@ -81,11 +81,16 @@ class FormBody extends Component {
       .then(res => {
         // console.log(res.data)
         this.setState({
-          submitStatus: true
+          submitStatus: true,
+          recipeList: ["Your response has been recorded. Thank You."]
         });
       })
       .catch(e => {
-        console.log(e);
+        // console.log(e);
+        this.setState({
+          submitStatus: true,
+          recipeList: ["You have already submitted a response. Thank you."]
+        });
       });
   }
 
@@ -117,14 +122,7 @@ class FormBody extends Component {
           </select>
         </p>
         <div className="additionalRecipes"> {this.state.recipeList}</div>
-        <Button
-          variant="outline-dark"
-          size="lg"
-          onClick={this.handleSubmit}
-          disabled={this.state.submitStatus}
-        >
-          Submit
-        </Button>
+
         <p>* Unconfirmed Ratings will not be submitted</p>
         <div className="cap">
           <Recaptcha
@@ -134,6 +132,14 @@ class FormBody extends Component {
             verifyCallback={this.verifyCallback}
           />
         </div>
+        <Button
+          variant="outline-dark"
+          size="lg"
+          onClick={this.handleSubmit}
+          disabled={this.state.submitStatus}
+        >
+          Submit
+        </Button>
       </div>
     );
   }

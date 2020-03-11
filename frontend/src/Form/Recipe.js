@@ -35,7 +35,7 @@ class Recipe extends Component {
         rList: { rName: this.props.rName, rating: newRating }
       });
       // this.props.parentComponent(newRating)
-      console.log(this.state.rList);
+      // console.log(this.state.rList);
     }
   }
 
