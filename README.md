@@ -1,1 +1,1 @@
-Form based on ReactJS to collect user ratings for recipes.
+ReactJS form to collect user ratings for South Indian dishes.
