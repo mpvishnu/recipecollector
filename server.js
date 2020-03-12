@@ -9,12 +9,13 @@ const path = require("path");
 require("dotenv").config();
 
 const app = express();
-const port = process.env.PORT || 5000;
+// const port = process.env.PORT || 5000;
+const port = 5000;
 
 app.use(cors());
 app.use(express.json());
 
-var uri = process.env.MONGO_SERVER;
+var uri = process.env.ATLAS_URI;
 
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 var connection = mongoose.connection;
@@ -31,6 +32,10 @@ connection.on(
 // app.use('/getrecipe', recipeRouter);
 
 app.get("/", (req, res) => {
+  res.json({ content: "HELLO FROM SERVER!" });
+});
+
+app.get("/getrecipes", (req, res) => {
   let rid = req.query.recipeID;
   if (rid) {
     Recipe.find({ RecipeID: rid }, { _id: 0, Name: 1 })
@@ -60,11 +65,17 @@ app.post("/savereview", (req, res) => {
 });
 
 app.use(express.static("frontend/build"));
+<<<<<<< HEAD
+=======
 
 app.get("*", (req, res) => {
 res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
 });
+>>>>>>> 0ad006e2ceaa166cc10e0b3f1312ed068f3f3dfc
 
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
+});
 
 app.listen(port, () => {
   console.log(`Server is running ...! on port : ${port}`);
