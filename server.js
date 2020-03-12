@@ -65,13 +65,10 @@ app.post("/savereview", (req, res) => {
 });
 
 app.use(express.static("frontend/build"));
-<<<<<<< HEAD
-=======
 
 app.get("*", (req, res) => {
-res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
+  res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
 });
->>>>>>> 0ad006e2ceaa166cc10e0b3f1312ed068f3f3dfc
 
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
