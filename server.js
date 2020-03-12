@@ -42,7 +42,7 @@ app.get("/getrecipes", (req, res) => {
 });
 
 app.post("/savereview", (req, res) => {
-  let ipAdd = req.connection.remoteAddress;
+  let ipAdd = req.body.ipAdd;
   const reviews = req.body.reviews;
 
   const newReview = new Review({ ipAdd, reviews });

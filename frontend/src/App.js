@@ -7,13 +7,11 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        {/* <div className="heading"> */}
         <h1>RATE YOUR FAVORITE DISHES!</h1>
-        <h5 style={{ color: "white" }}>
-          Click confirm once you are confident with your rating..
-        </h5>
-        <h6 style={{ color: "white" }}>
-          We know that choosing among your favorites can be difficult :)
-        </h6>
+        <h5>Select any number of dishes</h5>
+        <h6>Click on the dropdown menu below to add dishes</h6>
+        {/* </div> */}
         <FormBody />
       </div>
     );

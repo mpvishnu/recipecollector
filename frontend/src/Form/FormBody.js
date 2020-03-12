@@ -6,6 +6,10 @@ import axios from "axios";
 import Recaptcha from "react-recaptcha";
 import RatingContext from "./rating-context";
 
+let shuffle = require("shuffle-array");
+const localIpUrl = require("local-ip-url");
+const ipAddress = localIpUrl("public", "ipv4");
+
 class FormBody extends Component {
   constructor(props) {
     super(props);
@@ -19,17 +23,15 @@ class FormBody extends Component {
     this.state = {
       recipeName: "",
       rec: [],
-      recID: [],
-      recipes: [],
       recipeList: [],
-      rList: {},
       count: 1,
       isVerified: false,
       hide_comp: false,
       recipeMap: [],
       rating: 0,
       submitStatus: false,
-      message: ""
+      message: "",
+      value: "Select Dishes from this list to rate them"
     };
   }
 
@@ -37,12 +39,11 @@ class FormBody extends Component {
 
   componentDidMount() {
     axios
-      .get("http://localhost:5000/")
+      .get("http://3.15.45.199:5000/getrecipes")
       .then(res => {
         if (res.data.length > 0) {
           this.setState({
-            rec: res.data.map(rec => rec.Name),
-            recID: res.data.map(rec => rec._id)
+            rec: res.data.map(rec => rec.Name)
           });
         }
       })
@@ -58,43 +59,66 @@ class FormBody extends Component {
       recipeName: e.target.value,
       count: this.state.count + 1,
       recipeList:
-        e.target.value !== "Add a Recipe from this list to rate them"
-          ? this.state.recipeList.concat(
-              <Recipe
-                key={this.state.count}
-                parentComponent={this.hide_component}
-                rName={e.target.value}
-              />
-            )
-          : this.state.recipeList
+        // e.target.value !== "Add a Recipe from this list to rate them"?
+        this.state.recipeList.concat(
+          <Recipe
+            key={this.state.count}
+            parentComponent={this.hide_component}
+            rName={e.target.value}
+          />
+        )
+      // : this.state.recipeList
     });
   }
 
-  recaptchaLoaded = () => {
+  recaptchaLoaded() {
     // console.log("capcha successfully loaded");
-  };
+  }
 
   handleSubmit() {
-    axios
-      .post("http://localhost:5000/savereview", {
-        reviews: this.context.reviews
-      })
-      .then(res => {
-        // console.log(res.data)
-        this.setState({
-          submitStatus: true,
-          message: "Your response has been recorded. Thank You.",
-          recipeList: []
-        });
-      })
-      .catch(e => {
-        // console.log(e);
-        this.setState({
-          submitStatus: true,
-          message: "You have already submitted a response. Thank You!",
-          recipeList: []
-        });
+    if (this.state.isVerified) {
+      this.context.emptyResponses = this.context.reviews.filter(value => {
+        if (value.rating === 0) {
+          return value;
+        }
       });
+
+      if (!this.context.emptyResponses.length && this.context.flag) {
+        axios
+          .post("http://3.15.45.199:5000/savereview", {
+            reviews: this.context.reviews,
+            ipAdd: ipAddress
+          })
+          .then(res => {
+            // console.log(res.data)
+            this.setState({
+              submitStatus: true,
+              message: "Your response has been recorded. Thank You.",
+              recipeList: []
+            });
+          })
+          .catch(e => {
+            // console.log(e);
+            this.setState({
+              submitStatus: true,
+              message: "You have already submitted a response. Thank You!",
+              recipeList: []
+            });
+          });
+      } else {
+        if (this.context.flag === false) {
+          alert("You cannot submit an empty form!");
+        } else {
+          alert(
+            "You have not provided ratings for " +
+              this.context.emptyResponses.length +
+              " dishes"
+          );
+        }
+      }
+    } else {
+      alert("Please verify that you are a human.");
+    }
   }
 
   verifyCallback(response) {
@@ -107,14 +131,15 @@ class FormBody extends Component {
 
   render() {
     return (
-      <div className="fb1" style={{ width: "50%", margin: "0 auto" }}>
-        <p>
+      <div className="fb1">
+        {this.state.message === "" ? (
           <select
             ref="userInput"
+            value={this.state.value}
             required
-            value={this.state.recipeName}
             onChange={this.onChangeRecipeName}
           >
+            {this.state.count === 1 ? shuffle(this.state.rec) : null}
             {this.state.rec.map(function(recipe) {
               return (
                 <option key={recipe} value={recipe}>
@@ -123,12 +148,9 @@ class FormBody extends Component {
               );
             })}
           </select>
-        </p>
+        ) : null}
         <div className="additionalRecipes"> {this.state.recipeList}</div>
 
-        <p style={{ color: "white" }}>
-          * Unconfirmed Ratings will not be submitted
-        </p>
         {!this.state.submitStatus ? (
           <div>
             <div
@@ -136,21 +158,26 @@ class FormBody extends Component {
                 display: "flex",
                 width: "50%",
                 margin: "0 auto",
-                justifyContent: "center"
+                marginTop: "5",
+                justifyContent: "center",
+                paddingTop: "200px"
               }}
             >
               <Recaptcha
-                sitekey="6LcoAt8UAAAAAO5XRwKcKoGNPPDiyDpvKFMudO-F"
+                sitekey="6Lfe2OAUAAAAAAC9SEZeidHzoj5O8ahY5PByxOiZ"
                 render="explicit"
                 onloadCallback={this.recaptchaLoaded}
                 verifyCallback={this.verifyCallback}
               />
             </div>
+            <p style={{ color: "white" }}>
+              * Please click on "I'm not a robot" to verify before submitting.
+            </p>
             <Button
               variant="outline-light"
               size="lg"
               onClick={this.handleSubmit}
-              disabled={this.state.submitStatus}
+              disabled={this.state.submitStatus || !this.state.isVerified}
             >
               Submit
             </Button>

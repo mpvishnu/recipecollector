@@ -15,7 +15,6 @@ class Recipe extends Component {
     showComp: true,
     star: <FontAwesomeIcon icon={faStarOutline} size={"2x"} />,
     starFull: <FontAwesomeIcon icon={faStarFilled} size={"2x"} />,
-    rList: [],
     done: false
   };
   constructor(props) {
@@ -23,40 +22,39 @@ class Recipe extends Component {
 
     this.changeRating = this.changeRating.bind(this);
     this.setFlag = this.setFlag.bind(this);
-    this.isDone = this.isDone.bind(this);
+    // this.isDone = this.isDone.bind(this);
   }
 
   static contextType = RatingContext;
 
+  componentDidMount() {
+    this.context.reviews.push({ rName: this.props.rName, rating: 0 });
+    this.context.flag = true;
+  }
+
   changeRating(newRating, name) {
-    if (!this.state.done) {
-      this.setState({
-        rating: newRating,
-        rList: { rName: this.props.rName, rating: newRating }
-      });
-      // this.props.parentComponent(newRating)
-      // console.log(this.state.rList);
-    }
+    this.setState({
+      rating: newRating
+    });
+    this.context.reviews = this.context.reviews.filter(value => {
+      if (value.rName === this.props.rName) {
+        value.rating = newRating;
+        return value;
+      } else {
+        return value;
+      }
+    });
   }
 
   setFlag = () => {
     this.setState({
-      showComp: false,
-      rList: []
+      showComp: false
     });
     this.context.reviews = this.context.reviews.filter(value => {
       if (value.rName !== this.props.rName) {
         return value;
       }
     });
-    this.props.parentComponent();
-  };
-
-  isDone = () => {
-    this.setState({
-      done: true
-    });
-    this.context.reviews.push(this.state.rList);
     this.props.parentComponent();
   };
 
@@ -80,25 +78,14 @@ class Recipe extends Component {
               <p>Rating Confirmed: {this.state.rating}</p>
             )}
             <br />
-            <div>
-              <Button
-                className="done_btn"
-                onClick={this.isDone}
-                variant="link"
-                size="sm"
-                disabled={this.state.done}
-              >
-                Confirm Rating
-              </Button>
-              <Button
-                className="del_btn"
-                onClick={this.setFlag}
-                variant="link"
-                size="sm"
-              >
-                Remove
-              </Button>
-            </div>
+            <Button
+              className="del_btn"
+              onClick={this.setFlag}
+              variant="link"
+              size="sm"
+            >
+              Remove
+            </Button>
           </div>
         ) : null}
       </div>

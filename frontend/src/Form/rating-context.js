@@ -1,7 +1,9 @@
-import React from 'react';
+import React from "react";
 
 const ratingContext = React.createContext({
-    reviews :[]
+  reviews: [],
+  emptyResponses: [],
+  flag: false
 });
 
 export default ratingContext;

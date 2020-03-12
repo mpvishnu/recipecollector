@@ -1,5 +1,5 @@
 .fb1 {
-  align-content: center;
+  justify-content: center;
 }
 
 .p1 {
@@ -16,4 +16,11 @@
 .message {
   text-align: center;
   font-size: larger;
+}
+
+.additionalRecipes {
+  margin: 10 auto;
+  margin-top: 5;
+  justify-content: center;
+  height: 100%;
 }

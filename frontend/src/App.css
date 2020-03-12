@@ -6,4 +6,5 @@
   align-items: center;
   color: #61dafb;
   min-height: 100vh;
+  overflow-x: auto;
 }
