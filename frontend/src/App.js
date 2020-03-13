@@ -2,15 +2,18 @@ import React, { Component } from "react";
 import FormBody from "./Form/FormBody.js";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { loadReCaptcha } from "react-recaptcha-v3";
 
 class App extends Component {
+  componentDidMount() {
+    loadReCaptcha("6LfPBeEUAAAAAA4wiycKf9i1kIig358n5fN6SA8J");
+  }
   render() {
     return (
       <div className="App">
         {/* <div className="heading"> */}
-        <h1>RATE YOUR FAVORITE DISHES!</h1>
-        <h5>Select any number of dishes</h5>
-        <h6>Click on the dropdown menu below to add dishes</h6>
+        <h1>RATING COLLECTOR</h1>
+
         {/* </div> */}
         <FormBody />
       </div>

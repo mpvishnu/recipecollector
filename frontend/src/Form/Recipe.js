@@ -13,8 +13,8 @@ class Recipe extends Component {
     apiResponse: "",
     recipeName: "",
     showComp: true,
-    star: <FontAwesomeIcon icon={faStarOutline} size={"2x"} />,
-    starFull: <FontAwesomeIcon icon={faStarFilled} size={"2x"} />,
+    star: <FontAwesomeIcon icon={faStarOutline} size={"3x"} />,
+    starFull: <FontAwesomeIcon icon={faStarFilled} size={"3x"} />,
     done: false
   };
   constructor(props) {

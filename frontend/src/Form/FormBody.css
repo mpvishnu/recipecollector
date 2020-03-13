@@ -24,3 +24,13 @@
   justify-content: center;
   height: 100%;
 }
+
+.ft {
+  justify-content: center;
+}
+.intro {
+  color: white;
+  height: 800px;
+  justify-content: center;
+  overflow-x: scroll;
+}

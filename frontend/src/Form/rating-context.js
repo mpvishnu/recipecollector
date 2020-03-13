@@ -3,7 +3,9 @@ import React from "react";
 const ratingContext = React.createContext({
   reviews: [],
   emptyResponses: [],
-  flag: false
+  flag: false,
+  duplicates: true,
+  numResponses: 0
 });
 
 export default ratingContext;
