@@ -16,7 +16,7 @@
     "react-dom": "^16.13.0",
     "react-rating": "^2.0.4",
     "react-recaptcha-v3": "^1.1.0",
-    "react-scripts": "^3.4.0",
+    "react-scripts": "^5.0.1",
     "shuffle-array": "^1.0.1"
   },
   "scripts": {
